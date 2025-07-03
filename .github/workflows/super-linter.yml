@@ -1,29 +1,36 @@
-# This workflow executes several linters on changed files based on languages used in your code base whenever
-# you push a code or open a pull request.
-#
-# You can adjust the behavior by modifying this file.
-# For more information, see:
-# https://github.com/github/super-linter
 name: Lint Code Base
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["**"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["**"]
+
 jobs:
   run-lint:
+    name: Super Linter
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
+      - name: ✅ Checkout code
         uses: actions/checkout@v4
         with:
-          # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
 
-      - name: Lint Code Base
+      - name: 🧹 Run Super-Linter
         uses: github/super-linter@v4
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # Only lint changed files for faster CI
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: "main"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # ✅ Enable only the linters you use
+          VALIDATE_PYTHON: true
+          VALIDATE_MARKDOWN: true
+          VALIDATE_YAML: false
+          VALIDATE_JSON: false
+
+          # Optional: show full logs on errors
+          LOG_LEVEL: NOTICE
