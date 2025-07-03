@@ -1,1 +1,2 @@
-print("🐍 This Python script is running from GitHub Actions!")
+a=int(input("ennter the calu"))
+print(a)
