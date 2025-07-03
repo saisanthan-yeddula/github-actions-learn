@@ -1,4 +1,4 @@
-name: Run Python Script
+name: Run Python Script and Tests
 
 on: [push]
 
@@ -15,5 +15,11 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run the script
+      - name: Install pytest
+        run: pip install pytest
+
+      - name: Run script
         run: python script.py
+
+      - name: Run tests
+        run: pytest
